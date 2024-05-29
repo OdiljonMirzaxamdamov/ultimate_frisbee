@@ -15,9 +15,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import Settings from '@material-ui/icons/Settings';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MailIcon from '@material-ui/icons/Mail';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutline from '@material-ui/icons/PauseCircleOutline';
@@ -187,12 +188,12 @@ class AppDrawer extends React.Component {
             </div>
         );
 
-        const chooseUser = (
+        const setServeAndUser = (
             <div>
                 <List>
-                    {['Замена сети и пользователя'].map((text, index) => (
+                    {['Замена сети или пользователя'].map((text, index) => (
                         <ListItem button key={text} onClick={() => goTo('/')}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+                            <ListItemIcon>{index % 2 === 0 ? <Settings/> : <MailIcon/>}</ListItemIcon>
                             <ListItemText primary={text}/>
                         </ListItem>
                     ))}
@@ -343,7 +344,7 @@ class AppDrawer extends React.Component {
                             open
                         >
                             {drawer}
-                            {chooseUser}
+                            {setServeAndUser}
                         </Drawer>
                     </Hidden>
                 </nav>
