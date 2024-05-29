@@ -183,8 +183,6 @@ class AppDrawer extends React.Component {
                     ))}
                 </List>
                 <Divider/>
-                <List>
-                </List>
             </div>
         );
 
@@ -199,8 +197,6 @@ class AppDrawer extends React.Component {
                     ))}
                 </List>
                 <Divider/>
-                <List>
-                </List>
             </div>
         );
 
@@ -309,7 +305,7 @@ class AppDrawer extends React.Component {
                                     {isGame && <MenuItem onClick={this.handleForceUpdate(forceUpdateFromServer)} >Загрузить с сервера</MenuItem>}
                                     {isGame && <MenuItem onClick={this.handleForceUpdate(forceEraseGame)}>Начать игру заново</MenuItem>}
                                     {isGame && <MenuItem onClick={this.handleSaveGame(saveGame)}>Выгрузить игру</MenuItem>}
-                                    <MenuItem onClick={logout}>Выйти</MenuItem>
+                                    <MenuItem onClick={() => { goTo('/network'); logout(); }}>Выйти</MenuItem>
                                 </Menu>
                             </div>
                         )}
@@ -317,7 +313,7 @@ class AppDrawer extends React.Component {
                 </AppBar>
                 {/*</div>*/}
                 <nav className={classes.drawer}>
-                    {/* The implementation can be swap with js to avoid SEO duplication of links. */}
+                    {/* The implementation can be swaped with js to avoid SEO duplication of links. */}
                     <Hidden mdUp implementation="css">
                         <Drawer
                             container={this.props.container}
@@ -333,6 +329,7 @@ class AppDrawer extends React.Component {
                             }}
                         >
                             {drawer}
+                            {setServeAndUser}
                         </Drawer>
                     </Hidden>
                     <Hidden smDown implementation="css">
