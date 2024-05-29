@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from "react-redux";
 import {ADMIN, SCOREKEEPER} from "../constants";
 import {goTo} from "../AC";
 
-class AuthRedirect extends Component {
+class AuthRedirect extends React.Component {
     render() {
         const {user, goTo} = this.props;
 

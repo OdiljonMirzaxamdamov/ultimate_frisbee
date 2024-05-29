@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Provider} from 'react-redux'
 import {ConnectedRouter} from "react-router-redux";
 import store from "./store";
@@ -9,7 +9,7 @@ import NetworkRoute from "./Routes/NetworkRoute";
 import KeeperRoute from "./Routes/KeeperRoute";
 import ShowGameRoute from "./Routes/ShowGameRoute";
 
-class App extends Component {
+class App extends React.Component {
     render() {
         return (
             <Provider store={store}>

@@ -33,6 +33,7 @@ import {push} from 'react-router-redux';
 import uuidv4 from 'uuid/v4';
 import {LogLineData} from "./model";
 
+
 export const loadDataForShowGame = (gameID) => {
     return (dispatch) => {
         dispatch({
@@ -82,7 +83,7 @@ export const loadDataForShowGame = (gameID) => {
 
 
 
-            
+
             .catch(error => {
                 console.error('Ошибка загрузки данных', error);
                 dispatch({
@@ -799,22 +800,24 @@ export const loadTournamentsList = () => {
 
 export const loadUsersAndLogin = (user) => {
     return (dispatch) => {
-        dispatch({
-            type: LOAD_USERS + START,
-        });
-
-        const params = { method: 'GET',
+        dispatch({type: LOAD_USERS + START,});
+        const params = {
+            method: 'GET',
             mode: 'cors',
-            cache: 'default' };
+            cache: 'default',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
 
         // const params = {};
-
         fetch(API.users, params)
             .then(res => {
                 if (res.status >= 400) {
                     throw new Error(res.statusText)
                 }
-                return res.json()
+
+                return res.json();
             })
             .then(response => {
                     let fullUser;

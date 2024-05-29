@@ -8,7 +8,7 @@ export const ADD = '_ADD';
 
 export const API = {
     bearer: '/bearer',
-    //users: 'http://142.93.129.161:8084/api/v1/users',
+    // users: 'http://142.93.129.161:8084/api/v1/users',
     users: '/users',
     //tournaments: 'http://142.93.129.161:8084/api/v1/tournaments',
     tournaments: '/tournaments',

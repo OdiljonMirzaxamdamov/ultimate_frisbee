@@ -174,7 +174,23 @@ class AppDrawer extends React.Component {
         const drawer = (
             <div>
                 <List>
-                    {['Главная'].map((text, index) => (
+                    {['Главная пользователя'].map((text, index) => (
+                        <ListItem button key={text} onClick={() => goTo('/network/keeper')}>
+                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+                            <ListItemText primary={text}/>
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider/>
+                <List>
+                </List>
+            </div>
+        );
+
+        const chooseUser = (
+            <div>
+                <List>
+                    {['Замена сети и пользователя'].map((text, index) => (
                         <ListItem button key={text} onClick={() => goTo('/')}>
                             <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
                             <ListItemText primary={text}/>
@@ -186,6 +202,8 @@ class AppDrawer extends React.Component {
                 </List>
             </div>
         );
+
+
         return (
             <div className={classes.root}>
                 <CssBaseline/>
@@ -325,6 +343,7 @@ class AppDrawer extends React.Component {
                             open
                         >
                             {drawer}
+                            {chooseUser}
                         </Drawer>
                     </Hidden>
                 </nav>
