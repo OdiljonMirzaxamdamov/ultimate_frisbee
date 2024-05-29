@@ -28,34 +28,66 @@ const styles = theme => ({
         paddingLeft: theme.spacing.unit * 4,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start'
+        // alignItems: 'right'
     },
     mainList: {
         paddingLeft: 0,
-        marginTop: 64
+        marginTop: 64,
+
+        display: 'flex',
+        flexDirection: 'column',
     },
+
     link: {
-        textDecoration: 'none'
+        textDecoration: 'none',
     },
+
     fab: {
         position: 'fixed',
         bottom: theme.spacing.unit * 2,
         right: theme.spacing.unit * 2,
+
     },
     collapse: {
         color: 'rgba(0, 0, 0, 0.54)'
     },
-    dates: {
-      whiteSpace: 'normal'
+
+    item: {
+        display: 'flex',
+        justifyContent: 'space-around',
     },
+
+    name: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        flexGrow: '0',
+        flexBasis: '33%',
+    },
+
+    dates: {
+        whiteSpace: 'normal',
+
+        display: 'flex',
+        justifyContent: 'center',
+        flexGrow: '0',
+        flexBasis: '33%',
+
+        borderLeft: '1px solid grey',
+        borderRight: '1px solid grey'
+    },
+
+    place: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexGrow: '0',
+        flexBasis: '33%',
+    },
+
     dateNowrap: {
         fontSize: '0.875rem',
         color: 'gray',
         whiteSpace: 'nowrap'
     },
-    title: {
-
-    }
 });
 
 class TournamentsList extends React.Component {
@@ -92,22 +124,24 @@ class TournamentsList extends React.Component {
         return list.map((tournament, i) => {
             return (
                 <Link to={`/network/keeper/tournament/${tournament.id}`} className={classes.link} key={tournament.id}>
-                    <ListItem button>
-                        <ListItemText primary={tournament.name}/>
+                    <ListItem className={classes.item}>
+
+                        <ListItemText className={classes.name} primary={tournament.name}/>
+
                         <ListItemText className={classes.dates}>
-                            <span className={classes.dateNowrap}>{tournament.dateStart} -</span>
-                             <span> </span>
+                            <span className={classes.dateNowrap}>{tournament.dateStart} &nbsp;&nbsp;&nbsp;&nbsp;-</span>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <span className={classes.dateNowrap}>{tournament.dateEnd}</span>
                         </ListItemText>
-                        <ListItemText secondary={tournament.place}/>
+
+                        <ListItemText className={classes.place} secondary={tournament.place}/>
+
                         <ListItemSecondaryAction>
-                            <IconButton
-                                aria-label="Details"
-                                onClick={(evt) => this.setClickedID(tournament.id, evt)}
-                            >
+                            <IconButton aria-label="Details" onClick={(evt) => this.setClickedID(tournament.id, evt)}>
                                 <MoreVert />
                             </IconButton>
                         </ListItemSecondaryAction>
+
                     </ListItem>
                 </Link>
             )
@@ -141,19 +175,12 @@ class TournamentsList extends React.Component {
 
         return (
             <div className={classes.root}>
-                <List
-                    className={classes.mainList}
-                    component="nav"
-                    subheader={<ListSubheader component="div">Список турниров</ListSubheader>}
-                >
+                <List className={classes.mainList} component="nav" subheader={<ListSubheader component="div">Список турниров</ListSubheader>}>
                     {(shouldReload || tournamentsList.isLoading) ? <Loader />  : this.renderTournamentsList()}
                 </List>
 
-                {(shouldReload || tournamentsList.isLoading) ?
-                    null
-                    :
-                    <Button variant="fab" className={classes.fab} color='secondary'
-                            onClick={this.handleOpenAddTournament}>
+                {(shouldReload || tournamentsList.isLoading) ? null :
+                    <Button variant="fab" className={classes.fab} color='secondary' onClick={this.handleOpenAddTournament}>
                         <AddIcon/>
                     </Button>
                 }
