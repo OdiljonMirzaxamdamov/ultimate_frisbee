@@ -720,7 +720,7 @@ export const pushNewTournament = (tournament) => {
             .then((resp) => {
                 if ((resp.status < 200) || (resp.status > 300)) {
                     throw new Error("Response status: " + resp.status);
-                } else return resp;
+                } else return resp.json();
             })
             .then(() => {
                 dispatch({
@@ -733,7 +733,7 @@ export const pushNewTournament = (tournament) => {
             })
             .catch((err) => {
                 alert("Не получилось обновить таблицу турниров!");
-                console.log('Ошибка обновления табоицы турниров!', err);
+                console.log('Ошибка обновления таблицу турниров!', err);
             })
 
     }

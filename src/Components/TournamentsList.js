@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {mapToArr} from "../helpers";
+
 import {withStyles} from '@material-ui/core/styles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import {connect} from "react-redux";
-import {loadTournamentsList} from "../AC";
-import {mapToArr} from "../helpers";
-import {Link} from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVert from '@material-ui/icons/MoreVert';
+
 import TournamentDetails from "./TournamentDetails";
+import AddTournament from "./AddTournament";
 import Loader from "./Loader";
+import {loadTournamentsList} from "../AC";
+
 
 const styles = theme => ({
     root: {
@@ -121,7 +125,7 @@ class TournamentsList extends React.Component {
         const {tournamentsList, classes} = this.props;
         const list = mapToArr(tournamentsList.list);
 
-        return list.map((tournament, i) => {
+        return list.map((tournament) => {
             return (
                 <Link to={`/network/keeper/tournament/${tournament.id}`} className={classes.link} key={tournament.id}>
                     <ListItem className={classes.item}>
@@ -136,6 +140,7 @@ class TournamentsList extends React.Component {
 
                         <ListItemText className={classes.place} secondary={tournament.place}/>
 
+                        {/*кнопка три-точки для подробной информайии о турнире*/}
                         <ListItemSecondaryAction>
                             <IconButton aria-label="Details" onClick={(evt) => this.setClickedID(tournament.id, evt)}>
                                 <MoreVert />
@@ -159,7 +164,6 @@ class TournamentsList extends React.Component {
     //     this.setState({
     //         isOpenAddTournament: false
     //     })
-    //
     // };
 
     resetClickedID = () => {
@@ -171,7 +175,7 @@ class TournamentsList extends React.Component {
 
     render() {
         const {classes, shouldReload, tournamentsList} = this.props;
-        const {clickedID} = this.state;
+        const {clickedID, isOpenAddTournament} = this.state;
 
         return (
             <div className={classes.root}>
@@ -179,11 +183,14 @@ class TournamentsList extends React.Component {
                     {(shouldReload || tournamentsList.isLoading) ? <Loader />  : this.renderTournamentsList()}
                 </List>
 
+                {/*красная кнопка на основной странице для добавления турниров*/}
                 {(shouldReload || tournamentsList.isLoading) ? null :
                     <Button variant="fab" className={classes.fab} color='secondary' onClick={this.handleOpenAddTournament}>
                         <AddIcon/>
                     </Button>
                 }
+
+                {isOpenAddTournament ? <AddTournament isOpen={isOpenAddTournament} toggleClose={() => this.setState({isOpenAddTournament: false})} /> : null}
 
                 {clickedID ? <TournamentDetails id={clickedID} resetClickedID={this.resetClickedID} /> : null }
             </div>

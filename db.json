@@ -11477,6 +11477,18 @@
       "id": "146f9aae-14b1-40c8-9a76-3a2489ed6ff0",
       "name": "Grace"
     },
+    {
+      "id": "5a0a68ed-5400-4ed0-970f-6c4984394c69",
+      "name": "oksidisco"
+    },
+    {
+      "id": "7f506979-7112-453c-b950-1ea147e620e9",
+      "name": "medvedi"
+    },
+    {
+      "id": "33bb9724-ad0e-41b7-92cb-01f425d6852d",
+      "name": "олбл"
+    }
   ],
   "tournaments": [
     {
@@ -11653,9 +11665,13 @@
         "02",
         "03",
         "04",
-        "05"
+        "05",
+        "33bb9724-ad0e-41b7-92cb-01f425d6852d"
       ],
-      "divisions": []
+      "isMenDivision": false,
+      "isWomenDivision": false,
+      "isMixDivision": false,
+      "ownerId": ""
     },
     {
       "id": "sJiAekc",

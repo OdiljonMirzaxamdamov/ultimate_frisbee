@@ -1,13 +1,15 @@
 import React from 'react';
+
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {withStyles} from "@material-ui/core/styles/index";
+
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
-import {withStyles} from "@material-ui/core/styles/index";
 
 class TournamentDetails extends React.Component {
     state = {
@@ -22,6 +24,11 @@ class TournamentDetails extends React.Component {
         const {resetClickedID} = this.props;
         resetClickedID();
         // this.setState({open: false});
+    };
+
+    handleDeleteTournament = () => {
+        const {resetClickedID} = this.props;
+        resetClickedID();
     };
 
     getValue() {
@@ -62,16 +69,22 @@ class TournamentDetails extends React.Component {
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">{tournamentsList.list.get(id).name}</DialogTitle>
+
                     <DialogContent className={classes.page}>
                         <DialogContentText id="alert-dialog-description">
                             {this.getListOfTournamentsFields(tournamentsList.list.get(id))}
                         </DialogContentText>
                     </DialogContent>
-                    <DialogActions>
+
+                    <DialogActions className={classes.buttons}>
+                        <Button onClick={this.handleDeleteTournament} className={classes.deleteButton} autoFocus>
+                            Удалить
+                        </Button>
                         <Button onClick={this.handleClose} color="primary" autoFocus>
                             Закрыть
                         </Button>
                     </DialogActions>
+
                 </Dialog>
         );
     }
@@ -98,7 +111,13 @@ const mapDispatchToProps = () => {
 const styles = theme => ({
     page: {
         minWidth: 240
-    }
+    },
+    buttons: {
+        justifyContent: 'space-between'
+    },
+    deleteButton: {
+        color: '#e57373'
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TournamentDetails));
