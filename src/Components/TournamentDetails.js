@@ -10,6 +10,7 @@ import {withStyles} from "@material-ui/core/styles/index";
 
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
+import {deleteTournament} from "../AC";
 
 class TournamentDetails extends React.Component {
     state = {
@@ -23,12 +24,12 @@ class TournamentDetails extends React.Component {
     handleClose = () => {
         const {resetClickedID} = this.props;
         resetClickedID();
-        // this.setState({open: false});
+        this.setState({open: false});
     };
 
     handleDeleteTournament = () => {
-        const {resetClickedID} = this.props;
-        resetClickedID();
+        const {id, deleteTournament} = this.props;
+        deleteTournament(id);
     };
 
     getValue() {
@@ -59,6 +60,12 @@ class TournamentDetails extends React.Component {
 
     render() {
         const {id, tournamentsList, classes} = this.props;
+        const tournament = tournamentsList.list.get(id);
+
+        // Добавление проверки на существование турнира
+        if (!tournament) {
+            return null;
+        }
 
         return (
                 <Dialog
@@ -68,11 +75,11 @@ class TournamentDetails extends React.Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{tournamentsList.list.get(id).name}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{tournament.name}</DialogTitle>
 
                     <DialogContent className={classes.page}>
                         <DialogContentText id="alert-dialog-description">
-                            {this.getListOfTournamentsFields(tournamentsList.list.get(id))}
+                            {this.getListOfTournamentsFields(tournament)}
                         </DialogContentText>
                     </DialogContent>
 
@@ -96,6 +103,7 @@ TournamentDetails.propTypes = {
         // from store
     tournamentsList: PropTypes.object,
     classes: PropTypes.object.isRequired,
+    deleteTournament: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (store) => {
@@ -104,8 +112,10 @@ const mapStateToProps = (store) => {
     };
 };
 
-const mapDispatchToProps = () => {
-    return {};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteTournament: (id) => dispatch(deleteTournament(id))
+    };
 };
 
 const styles = theme => ({

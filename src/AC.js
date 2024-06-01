@@ -15,6 +15,7 @@ import {
     PULL,
     PUSH_NEW_TEAM,
     PUSH_NEW_TOURNAMENT, REDO,
+    DELETE_TOURNAMENT,
     SHOULD_RELOAD,
     SOTG,
     START,
@@ -736,6 +737,41 @@ export const pushNewTournament = (tournament) => {
                 console.log('Ошибка обновления таблицу турниров!', err);
             })
 
+    }
+};
+
+export const deleteTournament = (tournamentId) => {
+    return (dispatch) => {
+        dispatch({
+            type: DELETE_TOURNAMENT + START,
+        });
+
+        const params = {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+
+        return fetch(`${API.tournaments}/${tournamentId}`, params)
+            .then((resp) => {
+                if ((resp.status < 200) || (resp.status > 300)) {
+                    throw new Error("Response status: " + resp.status);
+                } else return resp.json();
+            })
+            .then(() => {
+                dispatch({
+                    type: DELETE_TOURNAMENT + SUCCESS,
+                });
+                dispatch({
+                    type: LOAD_TOURNAMENTS + SHOULD_RELOAD,
+                });
+
+            })
+            .catch((err) => {
+                alert("Не получилось удалить турнир!");
+                console.log('Ошибка удаления турнира!', err);
+            });
     }
 };
 
