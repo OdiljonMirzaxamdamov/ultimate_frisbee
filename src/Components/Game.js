@@ -130,9 +130,13 @@ class Game extends Component {
 
         return (
             <div>
+
                 <AppDrawer
-                    title={<GameTimer gameID={id} initialTime={game.timePassed ? game.timePassed : 0}
-                                      isTimerOn={game.isTimeOn} isGameInProgress={game.inProgress}/>}
+                    title={<GameTimer
+                            gameID={id}
+                            initialTime={game.timePassed ? game.timePassed : 0}
+                            isTimerOn={game.isTimeOn}
+                            isGameInProgress={game.inProgress}/>}
                     isGame
                     isTimerOn={game.isTimeOn}
                     toggleTimer={this.toggleTimer}
@@ -142,9 +146,10 @@ class Game extends Component {
                     forceEraseGame={this.forceEraseGame}
                     uploadingStatus={game.isUploading}
                     saveGame = {this.handleSaveGame}
+                />
 
-            />
                 <main className={classes.content}>
+
                     <AppBar position="static" color="default" className={classes.tabs}>
                         <Tabs
                             value={tabValue}
@@ -168,6 +173,7 @@ class Game extends Component {
                         <GameControl gameID={id}/>
                     </TabContainer>
                     }
+
                     {tabValue === 1 &&
                     <TabContainer>
                         <GameLog
@@ -178,11 +184,13 @@ class Game extends Component {
                         />
                     </TabContainer>
                     }
+
                     {tabValue === 2 &&
                     <TabContainer>
                         Статистика
                     </TabContainer>
                     }
+
                     {tabValue === 3 &&
                     <TabContainer>
                         <GameViewLog
@@ -193,6 +201,7 @@ class Game extends Component {
                         />
                     </TabContainer>
                     }
+
                 </main>
 
             </div>

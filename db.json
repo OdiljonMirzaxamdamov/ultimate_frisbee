@@ -11473,6 +11473,17 @@
       "games": 0,
       "rosterID": "ros07"
     },
+    {
+      "id": "4580e5a4-3a7f-4c6c-9cd1-13719680bdcb",
+      "name": "проверка",
+      "players": 44,
+      "games": 45,
+      "rosterID": "ros08"
+    },
+    {
+      "id": "f8778f0b-c059-4963-8991-9232b10436ec",
+      "name": "рплрп"
+    }
   ],
   "tournaments": [
     {
@@ -11491,7 +11502,9 @@
         "02",
         "03",
         "04",
-        "146f9aae-14b1-40c8-9a76-3a2489ed6ff0"
+        "146f9aae-14b1-40c8-9a76-3a2489ed6ff0",
+        "4580e5a4-3a7f-4c6c-9cd1-13719680bdcb",
+        "f8778f0b-c059-4963-8991-9232b10436ec"
       ],
       "isMenDivision": false,
       "isWomenDivision": false,

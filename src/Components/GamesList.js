@@ -1,20 +1,22 @@
 import React from 'react';
+import {connect} from "react-redux";
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import {withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from './MyTableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
-import {connect} from "react-redux";
+
+import TableCell from './MyTableCell';
 import {goTo, loadAllTeams, loadGames, loadTournamentsList} from "../AC";
 import Loader from "./Loader";
 import {getMyGamesInProgress, mapToArr} from "../helpers";
 import dateFormat from 'dateformat';
-import {withRouter} from 'react-router-dom';
 
 let counter = 0;
 
