@@ -78,7 +78,7 @@ class EnhancedTableHead extends React.Component {
                         return (
                             <TableCell
                                 key={row.id}
-                                numeric={row.numeric}
+                                align={row.numeric ? 'right' : 'left'}
                                 padding={row.disablePadding ? 'none' : 'default'}
                                 sortDirection={orderBy === row.id ? order : false}
                                 style={row.id === 'score' ? {
@@ -261,8 +261,13 @@ class GameLog extends Component {
                                             className={classes.hover}
                                             style={getColorForLogLine(n.type)}
                                         >
-                                            <TableCell numeric component="th" scope="row" padding="default"
-                                                       className={classes.time} style={{padding: '0px 4px 0px 0px'}}>
+                                            <TableCell
+                                                align="right"
+                                                component="th"
+                                                scope="row"
+                                                padding="default"
+                                                className={classes.time}
+                                                style={{padding: '0px 4px 0px 0px'}}>
                                                 {`${Math.floor(n.time / 60)}:${n.time % 60}`}
                                             </TableCell>
                                             <TableCell className={classes.score} style={{

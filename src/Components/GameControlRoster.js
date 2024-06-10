@@ -94,7 +94,7 @@ class EnhancedTableHead extends React.Component {
                         return (
                             <TableCell
                                 key={row.id}
-                                numeric={row.numeric}
+                                align={row.numeric ? 'right' : 'left'}
                                 padding={row.disablePadding ? 'none' : 'default'}
                                 sortDirection={orderBy === row.id ? order : false}
                                 style={{padding: '0px 4px 0px 4px'}}
@@ -234,7 +234,7 @@ class GameControlRoster extends Component {
                                         className={classes.row}
                                     >
                                         <TableCell
-                                            numeric
+                                            align="right"
                                             component="th"
                                             scope="row"
                                             padding="default"

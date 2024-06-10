@@ -13,8 +13,9 @@ import {connect} from "react-redux";
 import {loadAllTeams, loadTournamentsList} from "../AC";
 import Loader from "./Loader";
 import AddTeam from "./AddTeam";
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import {Fab} from "@material-ui/core";
 
 
 let counter = 0;
@@ -69,7 +70,7 @@ class EnhancedTableHead extends React.Component {
                         return (
                             <TableCell
                                 key={row.id}
-                                numeric={row.numeric}
+                                align={row.numeric ? 'right' : 'left'}
                                 padding={row.disablePadding ? 'none' : 'default'}
                                 sortDirection={orderBy === row.id ? order : false}
 
@@ -268,8 +269,8 @@ class TeamsList extends React.Component {
                                             <TableCell component="th" scope="row" padding="default">
                                                 {n.name}
                                             </TableCell>
-                                            <TableCell numeric>{n.players}</TableCell>
-                                            <TableCell numeric>{n.games}</TableCell>
+                                            <TableCell align="right">{n.players}</TableCell>
+                                            <TableCell align="right">{n.games}</TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -298,10 +299,10 @@ class TeamsList extends React.Component {
                     labelRowsPerPage={'Строк:'}
                     labelDisplayedRows={({from, to, count}) => `${from}-${to} из ${count}`}
                 />
-                <Button variant="fab" className={classes.fab} color='secondary'
+                <Fab className={classes.fab} color='secondary'
                         onClick={this.handleOpenAddTeam}>
                     <AddIcon/>
-                </Button>
+                </Fab>
 
                 <AddTeam isOpen={isOpenAddTeam} toggleClose={this.handleCloseAddTeam} tournamentID={tournamentID}/>
 

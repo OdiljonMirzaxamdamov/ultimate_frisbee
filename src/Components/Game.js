@@ -154,7 +154,7 @@ class Game extends Component {
                         <Tabs
                             value={tabValue}
                             onChange={this.handleChangeTab}
-                            scrollable
+                            variant="scrollable"
                             scrollButtons="off"
                             indicatorColor="primary"
                             textColor="primary"

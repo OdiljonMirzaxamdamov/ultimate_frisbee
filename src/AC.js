@@ -33,6 +33,7 @@ import {
 import {push} from 'react-router-redux';
 import uuidv4 from 'uuid/v4';
 import {LogLineData} from "./model";
+import { isImmutable } from 'immutable';
 
 
 export const loadDataForShowGame = (gameID) => {
@@ -278,6 +279,7 @@ export const gameControl = (type, game, log, data) => {
         }
 
         game && dispatch(updateGame(getState().games.list.get(game.id)));
+
         (log || type === TIME_START || type === TIME_STOP || type === TIME_PAUSE)
             && dispatch(updateLog(getState().logs.list.get(game.logID)));
 
@@ -303,48 +305,61 @@ export const clearGame = (game) => {
   }
 };
 
+
+
 export const updateGame = (game) => {
    return (dispatch) => {
         dispatch({
             type: UPLOAD_GAME + START,
             payload: {id: game.id},
         });
+        
+       const params = {
+           method: 'PUT',
+           headers: {
+               "Content-Type": "application/json"
+           },
+           body: JSON.stringify(game)
+       };
 
-        const params = {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(game)
-        };
+        const path = `${API.games}/${game.id}`;
+           console.log('Request updateGame URL:', path);
+           console.log('Request updateGame Params:', params);
+           console.log('Request updateGame Params.Body:', params.body);
+           console.log('Request updateGame game:', game);
+           // console.log('-----path', API.games);
+           // console.log('-----params.body', params.body);
+           // debugger
 
-        // const path = `${API.games}/${game.id}`;
-        // console.log('-----path', API.games);
-       // console.log('-----params.body', params.body);
-       //
-       // debugger
 
-        fetch(API.games, params)
+        fetch(path, params)
             .then((resp) => {
-                if ((resp.status < 200) || (resp.status > 300)) {
+                if ((resp.status < 200) || (resp.status >= 300)) {
                     throw new Error("Response status: " + resp.status);
-                } else return resp;
+                } else return resp.json();
             })
-            .then(() => {
+            .then((data) => {
+
+                // Проверка, является ли data объектом Immutable.js
+                if (isImmutable(data)) {
+                    data = data.toJS(); // Преобразование в обычный JavaScript-объект
+                }
+                console.log('Response updateGame Data:', data); // Логирование данных ответа
+
                 dispatch({
                     type: UPLOAD_GAME + SUCCESS,
                     payload: {id: game.id},
                 });
-                // dispatch({
-                //     type: LOAD_GAMES + SHOULD_RELOAD,
-                // });
+                dispatch({
+                    type: LOAD_GAMES + SHOULD_RELOAD,
+                });
 
             })
             .catch((err) => {
-                // dispatch({
-                //     type: UPLOAD_GAME + FAIL,
-                //     payload: {id: game.id, error: err},
-                // });
+                dispatch({
+                    type: UPLOAD_GAME + FAIL,
+                    payload: { id: game.id, error: err.message },
+                });
                 console.error(`Не получилось обновить таблицу игры! ID игры: ${game.id}`, err);
             })
 
@@ -381,18 +396,27 @@ export const updateLog = (log) => {
             body: JSON.stringify(uploadData)
         };
 
-        // const path = `${API.logs}/${log.id}`;
+        const path = `${API.logs}/${log.id}`;
+        // console.log('Request updateLog URL:', path);
+        // console.log('Request updateLog Params:', params);
+
         // console.log('-----path', API.logs);
         // console.log('-----params.body', params.body);
         // debugger
+        // console.log('Проверка updateLog данных:', uploadData);
 
-        fetch(API.logs, params)
+        fetch(path, params)
             .then((resp) => {
-                if ((resp.status < 200) || (resp.status > 300)) {
+                if ((resp.status < 200) || (resp.status >= 300)) {
                     throw new Error("Response status: " + resp.status);
-                } else return resp;
+                } else return resp.json();
             })
             .then(() => {
+                // // Проверка, является ли data объектом Immutable.js
+                // if (isImmutable(data)) {
+                //     data = data.toJS(); // Преобразование в обычный JavaScript-объект
+                // }
+                // console.log('Response updateLog Data:', data); // Логирование данных ответа
                 dispatch({
                     type: UPLOAD_LOG + SUCCESS,
                     payload: {id: log.id},
@@ -400,15 +424,15 @@ export const updateLog = (log) => {
 
             })
             .catch((err) => {
-                // dispatch({
-                //     type: UPLOAD_LOG + FAIL,
-                //     payload: err,
-                // });
+                dispatch({
+                    type: UPLOAD_LOG + FAIL,
+                    payload: { message: err.message, id: log.id },
+                });
                 console.error(`Не получилось обновить таблицу лога! ID игры: ${log.id}`, err);
             })
-
     }
 };
+
 
 export const loadLog = (logID) => {
     return (dispatch) => {

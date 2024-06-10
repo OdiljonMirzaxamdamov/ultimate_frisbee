@@ -9,7 +9,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,6 +19,7 @@ import TournamentDetails from "./TournamentDetails";
 import AddTournament from "./AddTournament";
 import Loader from "./Loader";
 import {loadTournamentsList} from "../AC";
+import {Fab} from "@material-ui/core";
 
 
 const styles = theme => ({
@@ -185,9 +186,9 @@ class TournamentsList extends React.Component {
 
                 {/*красная кнопка на основной странице для добавления турниров*/}
                 {(shouldReload || tournamentsList.isLoading) ? null :
-                    <Button variant="fab" className={classes.fab} color='secondary' onClick={this.handleOpenAddTournament}>
+                    <Fab className={classes.fab} color='secondary' onClick={this.handleOpenAddTournament}>
                         <AddIcon/>
-                    </Button>
+                    </Fab>
                 }
 
                 {isOpenAddTournament ? <AddTournament isOpen={isOpenAddTournament} toggleClose={() => this.setState({isOpenAddTournament: false})} /> : null}
