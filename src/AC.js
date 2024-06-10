@@ -33,6 +33,7 @@ import {
 import {push} from 'react-router-redux';
 import uuidv4 from 'uuid/v4';
 import {LogLineData} from "./model";
+import { isImmutable } from 'immutable';
 
 
 export const loadDataForShowGame = (gameID) => {
@@ -278,6 +279,7 @@ export const gameControl = (type, game, log, data) => {
         }
 
         game && dispatch(updateGame(getState().games.list.get(game.id)));
+
         (log || type === TIME_START || type === TIME_STOP || type === TIME_PAUSE)
             && dispatch(updateLog(getState().logs.list.get(game.logID)));
 
@@ -303,16 +305,7 @@ export const clearGame = (game) => {
   }
 };
 
-// const sanitizeGame = (game) => {
-//     const sanitizedGame = { ...game };
-//     // Удаляем поля, которые могут вызвать проблемы при сериализации
-//     Object.keys(sanitizedGame).forEach(key => {
-//         if (sanitizedGame[key] === undefined) {
-//             delete sanitizedGame[key];
-//         }
-//     });
-//     return sanitizedGame;
-// };
+
 
 export const updateGame = (game) => {
    return (dispatch) => {
@@ -320,8 +313,7 @@ export const updateGame = (game) => {
             type: UPLOAD_GAME + START,
             payload: {id: game.id},
         });
-
-       // const sanitizedGame = sanitizeGame(game);
+        
        const params = {
            method: 'PUT',
            headers: {
@@ -331,12 +323,14 @@ export const updateGame = (game) => {
        };
 
         const path = `${API.games}/${game.id}`;
-           // console.log('Request URL:', path);
-           // console.log('Request Params:', params.body);
-
+           console.log('Request updateGame URL:', path);
+           console.log('Request updateGame Params:', params);
+           console.log('Request updateGame Params.Body:', params.body);
+           console.log('Request updateGame game:', game);
            // console.log('-----path', API.games);
            // console.log('-----params.body', params.body);
            // debugger
+
 
         fetch(path, params)
             .then((resp) => {
@@ -345,7 +339,13 @@ export const updateGame = (game) => {
                 } else return resp.json();
             })
             .then((data) => {
-                console.log('Response Data:', data); // Логирование данных ответа
+
+                // Проверка, является ли data объектом Immutable.js
+                if (isImmutable(data)) {
+                    data = data.toJS(); // Преобразование в обычный JavaScript-объект
+                }
+                console.log('Response updateGame Data:', data); // Логирование данных ответа
+
                 dispatch({
                     type: UPLOAD_GAME + SUCCESS,
                     payload: {id: game.id},
@@ -397,12 +397,13 @@ export const updateLog = (log) => {
         };
 
         const path = `${API.logs}/${log.id}`;
-        // console.log('Request URL:', path);
-        // console.log('Request Params:', params.body);
+        // console.log('Request updateLog URL:', path);
+        // console.log('Request updateLog Params:', params);
 
         // console.log('-----path', API.logs);
         // console.log('-----params.body', params.body);
         // debugger
+        // console.log('Проверка updateLog данных:', uploadData);
 
         fetch(path, params)
             .then((resp) => {
@@ -411,6 +412,11 @@ export const updateLog = (log) => {
                 } else return resp.json();
             })
             .then(() => {
+                // // Проверка, является ли data объектом Immutable.js
+                // if (isImmutable(data)) {
+                //     data = data.toJS(); // Преобразование в обычный JavaScript-объект
+                // }
+                // console.log('Response updateLog Data:', data); // Логирование данных ответа
                 dispatch({
                     type: UPLOAD_LOG + SUCCESS,
                     payload: {id: log.id},
