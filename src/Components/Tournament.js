@@ -82,7 +82,7 @@ class ScrollableTabsButtonForce extends React.Component {
                         <Tabs
                             value={value}
                             onChange={this.handleChange}
-                            scrollable
+                            variant="scrollable"
                             scrollButtons="off"
                             indicatorColor="primary"
                             textColor="primary"

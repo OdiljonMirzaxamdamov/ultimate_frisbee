@@ -303,6 +303,17 @@ export const clearGame = (game) => {
   }
 };
 
+// const sanitizeGame = (game) => {
+//     const sanitizedGame = { ...game };
+//     // Удаляем поля, которые могут вызвать проблемы при сериализации
+//     Object.keys(sanitizedGame).forEach(key => {
+//         if (sanitizedGame[key] === undefined) {
+//             delete sanitizedGame[key];
+//         }
+//     });
+//     return sanitizedGame;
+// };
+
 export const updateGame = (game) => {
    return (dispatch) => {
         dispatch({
@@ -310,41 +321,45 @@ export const updateGame = (game) => {
             payload: {id: game.id},
         });
 
-        const params = {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(game)
-        };
+       // const sanitizedGame = sanitizeGame(game);
+       const params = {
+           method: 'PUT',
+           headers: {
+               "Content-Type": "application/json"
+           },
+           body: JSON.stringify(game)
+       };
 
-        // const path = `${API.games}/${game.id}`;
-        // console.log('-----path', API.games);
-       // console.log('-----params.body', params.body);
-       //
-       // debugger
+        const path = `${API.games}/${game.id}`;
+           // console.log('Request URL:', path);
+           // console.log('Request Params:', params.body);
 
-        fetch(API.games, params)
+           // console.log('-----path', API.games);
+           // console.log('-----params.body', params.body);
+           // debugger
+
+        fetch(path, params)
             .then((resp) => {
-                if ((resp.status < 200) || (resp.status > 300)) {
+                if ((resp.status < 200) || (resp.status >= 300)) {
                     throw new Error("Response status: " + resp.status);
-                } else return resp;
+                } else return resp.json();
             })
-            .then(() => {
+            .then((data) => {
+                console.log('Response Data:', data); // Логирование данных ответа
                 dispatch({
                     type: UPLOAD_GAME + SUCCESS,
                     payload: {id: game.id},
                 });
-                // dispatch({
-                //     type: LOAD_GAMES + SHOULD_RELOAD,
-                // });
+                dispatch({
+                    type: LOAD_GAMES + SHOULD_RELOAD,
+                });
 
             })
             .catch((err) => {
-                // dispatch({
-                //     type: UPLOAD_GAME + FAIL,
-                //     payload: {id: game.id, error: err},
-                // });
+                dispatch({
+                    type: UPLOAD_GAME + FAIL,
+                    payload: { id: game.id, error: err.message },
+                });
                 console.error(`Не получилось обновить таблицу игры! ID игры: ${game.id}`, err);
             })
 
@@ -381,16 +396,19 @@ export const updateLog = (log) => {
             body: JSON.stringify(uploadData)
         };
 
-        // const path = `${API.logs}/${log.id}`;
+        const path = `${API.logs}/${log.id}`;
+        // console.log('Request URL:', path);
+        // console.log('Request Params:', params.body);
+
         // console.log('-----path', API.logs);
         // console.log('-----params.body', params.body);
         // debugger
 
-        fetch(API.logs, params)
+        fetch(path, params)
             .then((resp) => {
-                if ((resp.status < 200) || (resp.status > 300)) {
+                if ((resp.status < 200) || (resp.status >= 300)) {
                     throw new Error("Response status: " + resp.status);
-                } else return resp;
+                } else return resp.json();
             })
             .then(() => {
                 dispatch({
@@ -400,15 +418,15 @@ export const updateLog = (log) => {
 
             })
             .catch((err) => {
-                // dispatch({
-                //     type: UPLOAD_LOG + FAIL,
-                //     payload: err,
-                // });
+                dispatch({
+                    type: UPLOAD_LOG + FAIL,
+                    payload: { message: err.message, id: log.id },
+                });
                 console.error(`Не получилось обновить таблицу лога! ID игры: ${log.id}`, err);
             })
-
     }
 };
+
 
 export const loadLog = (logID) => {
     return (dispatch) => {

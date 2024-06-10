@@ -132,7 +132,7 @@ class GameViewLog extends Component {
                                             className={classes.hover}
                                             style={getColorForLogLine(n.type)}
                                         >
-                                            <TableCell numeric component="th" scope="row" padding="default"
+                                            <TableCell align="right" component="th" scope="row" padding="default"
                                                        className={classes.time} style={{padding: '0px 4px 0px 0px'}}>
                                                 {`${Math.floor(n.time / 60)}:${n.time % 60}`}
                                             </TableCell>

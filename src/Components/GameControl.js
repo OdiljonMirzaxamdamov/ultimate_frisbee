@@ -21,6 +21,7 @@ import GameLog from "./GameLog";
 import Undo from '@material-ui/icons/Undo';
 import Redo from '@material-ui/icons/Redo';
 import {gameControl} from "../AC";
+import {Fab} from "@material-ui/core";
 // import Fab from '@material-ui/core/Fab';
 
 
@@ -376,17 +377,17 @@ class GameControl extends Component {
                     </div>
 
                     {log && log.logList.length > 0 &&
-                        <Button size='small' variant="fab" className={classes.undo}
+                        <Fab size='small' className={classes.undo}
                                 onClick={this.handleClick(UNDO)}>
                             <Undo fontSize="small" color="action"/>
-                        </Button>
+                        </Fab>
                     }
 
                     {!isUndoListEmpty &&
-                        <Button size='small' variant="fab" className={classes.redo}
+                        <Fab size='small' className={classes.redo}
                                 onClick={this.handleClick(REDO)}>
                             <Redo fontSize="small" color="action"/>
-                        </Button>
+                        </Fab>
                     }
 
                 </div>
