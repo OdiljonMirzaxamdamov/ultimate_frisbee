@@ -33,8 +33,6 @@ import {
 import {push} from 'react-router-redux';
 import uuidv4 from 'uuid/v4';
 import {LogLineData} from "./model";
-import { isImmutable } from 'immutable';
-
 
 export const loadDataForShowGame = (gameID) => {
     return (dispatch) => {
@@ -282,16 +280,6 @@ export const gameControl = (type, game, log, data) => {
 
         (log || type === TIME_START || type === TIME_STOP || type === TIME_PAUSE)
             && dispatch(updateLog(getState().logs.list.get(game.logID)));
-
-        // dispatch({
-        //     type: UPLOAD_GAME + SHOULD_UPLOAD,
-        //     payload: {id: game.id},
-        // });
-        //
-        // dispatch({
-        //     type: UPLOAD_LOG + SHOULD_UPLOAD,
-        //     payload: {id: game.logID},
-        // });
     }
 };
 
@@ -305,15 +293,13 @@ export const clearGame = (game) => {
   }
 };
 
-
-
 export const updateGame = (game) => {
    return (dispatch) => {
         dispatch({
             type: UPLOAD_GAME + START,
             payload: {id: game.id},
         });
-        
+
        const params = {
            method: 'PUT',
            headers: {
@@ -323,29 +309,15 @@ export const updateGame = (game) => {
        };
 
         const path = `${API.games}/${game.id}`;
-           console.log('Request updateGame URL:', path);
-           console.log('Request updateGame Params:', params);
-           console.log('Request updateGame Params.Body:', params.body);
-           console.log('Request updateGame game:', game);
-           // console.log('-----path', API.games);
-           // console.log('-----params.body', params.body);
-           // debugger
-
 
         fetch(path, params)
             .then((resp) => {
+
                 if ((resp.status < 200) || (resp.status >= 300)) {
                     throw new Error("Response status: " + resp.status);
-                } else return resp.json();
+                } else return resp;
             })
-            .then((data) => {
-
-                // Проверка, является ли data объектом Immutable.js
-                if (isImmutable(data)) {
-                    data = data.toJS(); // Преобразование в обычный JavaScript-объект
-                }
-                console.log('Response updateGame Data:', data); // Логирование данных ответа
-
+            .then(() => {
                 dispatch({
                     type: UPLOAD_GAME + SUCCESS,
                     payload: {id: game.id},
@@ -362,19 +334,8 @@ export const updateGame = (game) => {
                 });
                 console.error(`Не получилось обновить таблицу игры! ID игры: ${game.id}`, err);
             })
-
     }
 };
-
-//////// Testing purpose
-// export const gameShouldUpload = (game) => {
-//     return (dispatch) => {
-//         dispatch({
-//             type: UPLOAD_GAME + SHOULD_UPLOAD,
-//             payload: {id: game.id},
-//         })
-//     }
-// };
 
 export const updateLog = (log) => {
     return (dispatch) => {
@@ -397,26 +358,14 @@ export const updateLog = (log) => {
         };
 
         const path = `${API.logs}/${log.id}`;
-        // console.log('Request updateLog URL:', path);
-        // console.log('Request updateLog Params:', params);
-
-        // console.log('-----path', API.logs);
-        // console.log('-----params.body', params.body);
-        // debugger
-        // console.log('Проверка updateLog данных:', uploadData);
 
         fetch(path, params)
             .then((resp) => {
                 if ((resp.status < 200) || (resp.status >= 300)) {
                     throw new Error("Response status: " + resp.status);
-                } else return resp.json();
+                } else return resp;
             })
             .then(() => {
-                // // Проверка, является ли data объектом Immutable.js
-                // if (isImmutable(data)) {
-                //     data = data.toJS(); // Преобразование в обычный JavaScript-объект
-                // }
-                // console.log('Response updateLog Data:', data); // Логирование данных ответа
                 dispatch({
                     type: UPLOAD_LOG + SUCCESS,
                     payload: {id: log.id},
@@ -432,7 +381,6 @@ export const updateLog = (log) => {
             })
     }
 };
-
 
 export const loadLog = (logID) => {
     return (dispatch) => {
@@ -494,7 +442,6 @@ export const loadViewLog = (logID) => {
     }
 };
 
-
 export const loadRosters = () => {
     return (dispatch) => {
         dispatch({
@@ -553,7 +500,6 @@ export const loadPlayers = () => {
     }
 };
 
-
 export const updateGameTimer = (gameID, time) => {
     return (dispatch) => {
         dispatch({
@@ -562,27 +508,6 @@ export const updateGameTimer = (gameID, time) => {
         })
     }
 };
-
-////////////// Testing purpose!
-// export const updateGameStart = (gameID, data) => {
-//     const {isTimerOn, inProgress} = data;
-//
-//     return (dispatch) => {
-//         let payloadData = {};
-//
-//         if (isTimerOn && !inProgress) {
-//             payloadData = {
-//                 inProgress: true,
-//                 isPull: true
-//             }
-//         }
-//
-//         dispatch({
-//             type: UPDATE_GAME + GAME_START,
-//             payload: {gameID, ...payloadData},
-//         })
-//     }
-// };
 
 export const updateTournament = (newTournamentData) => {
     return (dispatch) => {
@@ -828,35 +753,6 @@ export const loadTournamentsList = () => {
 
     }
 };
-
-///////////////  immitation only!
-// export const loadBearer = () => {
-//     return (dispatch) => {
-//         dispatch({
-//             type: LOAD_BEARER + START,
-//         });
-//
-//         fetch(API.bearer)
-//             .then(res => {
-//                 if (res.status >= 400) {
-//                     throw new Error(res.statusText)
-//                 }
-//                 return res.json()
-//             })
-//             .then(response => dispatch({
-//                     type: LOAD_BEARER + SUCCESS,
-//                     payload: response
-//                 })
-//             )
-//             .catch(err => {
-//                 dispatch({
-//                     type: LOAD_BEARER + FAIL,
-//                     payload: {err}
-//                 });
-//                 console.error('Ошибка загрузки барьера', err);
-//             });
-//     }
-// };
 
 export const loadUsersAndLogin = (user) => {
     return (dispatch) => {
