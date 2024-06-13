@@ -15,7 +15,7 @@ export const API = {
     //tournaments: 'http://142.93.129.161:8084/api/v1/tournaments',
     tournaments: 'http://localhost:4000/tournaments',
     //all_teams: 'http://142.93.129.161:8084/api/v1/teams',
-    all_teams: 'http://localhost:4000/teams',
+    all_teams: '/teams',
     //games: 'http://142.93.129.161:8084/api/v1/games/',
     games: 'http://localhost:4000/games',
     //rosters: 'http://142.93.129.161:8084/api/v1/rosters',
