@@ -5,33 +5,16 @@ import { withStyles } from "@material-ui/core/styles/index";
 
 import { saveGameAndLog } from "../../helpers";
 import { gameControl, loadGames, loadLog, loadRosters, updateGameTimer, loadPlayers, clearGame } from "../../AC";
-import { DRAWER_WIDTH, FORCE_UPLOAD_GAME, TIME_PAUSE, TIME_START, TIME_STOP } from "../../constants";
+import { FORCE_UPLOAD_GAME, TIME_PAUSE, TIME_START, TIME_STOP } from "../../constants";
 
 import AppDrawer from "../AppDrawer";
 import GameTimer from "../GameTimer";
 import GameControl from "../GameControl";
 import GameLog from "../GameLog";
 import GameViewLog from "../GameViewLog";
-import TabContainer from './TabContainer'; // Импортируем новый компонент
-import GameTabs from './GameTabs'; // Импортируем новый компонент
-
-
-const styles = theme => ({
-    root: {
-        display: 'flex',
-    },
-    toolbar: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        [theme.breakpoints.up('md')]: {
-            width: `calc(100% - ${DRAWER_WIDTH}px)`,
-            marginLeft: DRAWER_WIDTH,
-            paddingTop: 48,
-        },
-        paddingTop: 32,
-
-    }
-});
+import TabContainer from './TabContainer';
+import GameTabs from './GameTabs';
+import styles from "./GameStyles";
 
 
 const Game = ({ id, classes, game, log, loadGames, loadLog, loadRosters, loadPlayers, clearGame, gameControl }) => {
@@ -174,3 +157,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, {withTheme: true})(Game));
+
