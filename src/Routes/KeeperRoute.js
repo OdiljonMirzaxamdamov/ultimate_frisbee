@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Scorekeeper from "../Components/Scorekeeper";
 import {Redirect, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import {ADMIN, SCOREKEEPER} from "../constants";
+
+import AuthRedirect from "../Components/AuthRedirect";
+import Scorekeeper from "../Components/Scorekeeper";
 import Tournament from "../Components/Tournament";
 import Game from "../Components/Game/Game";
-import AuthRedirect from "../Components/AuthRedirect";
 
 
 class KeeperRoute extends Component {

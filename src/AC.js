@@ -30,7 +30,7 @@ import {
     UPLOAD_LOG, VIEW_LOAD_LOG,
     WRONG_USER
 } from "./constants";
-import {push} from 'react-router-redux';
+import {push} from 'connected-react-router';
 import uuidv4 from 'uuid/v4';
 import {LogLineData} from "./model";
 
@@ -322,16 +322,16 @@ export const updateGame = (game) => {
                     type: UPLOAD_GAME + SUCCESS,
                     payload: {id: game.id},
                 });
-                // dispatch({
-                //     type: LOAD_GAMES + SHOULD_RELOAD,
-                // });
+                dispatch({
+                    type: LOAD_GAMES + SHOULD_RELOAD,
+                });
 
             })
             .catch((err) => {
-                // dispatch({
-                //     type: UPLOAD_GAME + FAIL,
-                //     payload: { id: game.id, error: err.message },
-                // });
+                dispatch({
+                    type: UPLOAD_GAME + FAIL,
+                    payload: { id: game.id, error: err.message },
+                });
                 console.error(`Не получилось обновить таблицу игры! ID игры: ${game.id}`, err);
             })
     }
@@ -370,13 +370,12 @@ export const updateLog = (log) => {
                     type: UPLOAD_LOG + SUCCESS,
                     payload: {id: log.id},
                 });
-
             })
             .catch((err) => {
-                // dispatch({
-                //     type: UPLOAD_LOG + FAIL,
-                //     payload: { message: err.message, id: log.id },
-                // });
+                dispatch({
+                    type: UPLOAD_LOG + FAIL,
+                    payload: { message: err.message, id: log.id },
+                });
                 console.error(`Не получилось обновить таблицу лога! ID игры: ${log.id}`, err);
             })
     }

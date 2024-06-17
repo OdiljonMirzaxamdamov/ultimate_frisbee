@@ -8,22 +8,24 @@ export const ADD = '_ADD';
 
 // ссылку на http://localhost:4000 сделаем т.к. у нас выдает ошибку при переводе данных с хоста 3000 на 4000
 // поэтому вручную указываем путь куда надо чтобы проект не останавливался на месте
+export const LOCALHOST = 'http://localhost:4000';
+
 export const API = {
-    bearer: 'http://localhost:4000/bearer',
+    bearer: LOCALHOST + '/bearer',
     // users: 'http://142.93.129.161:8084/api/v1/users',
-    users: 'http://localhost:4000/users',
+    users: LOCALHOST + '/users',
     //tournaments: 'http://142.93.129.161:8084/api/v1/tournaments',
-    tournaments: 'http://localhost:4000/tournaments',
+    tournaments: LOCALHOST + '/tournaments',
     //all_teams: 'http://142.93.129.161:8084/api/v1/teams',
-    all_teams: '/teams',
+    all_teams: LOCALHOST + '/teams',
     //games: 'http://142.93.129.161:8084/api/v1/games/',
-    games: 'http://localhost:4000/games',
+    games: LOCALHOST + '/games',
     //rosters: 'http://142.93.129.161:8084/api/v1/rosters',
-    rosters: 'http://localhost:4000/rosters',
+    rosters: LOCALHOST + '/rosters',
     //players: 'http://142.93.129.161:8084/api/v1/players',
-    players: 'http://localhost:4000/players',
+    players: LOCALHOST + '/players',
     //logs: 'http://142.93.129.161:8084/api/v1/logs/',
-    logs: 'http://localhost:4000/logs',
+    logs: LOCALHOST + '/logs',
 };
 
 // commands
