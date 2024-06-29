@@ -91,8 +91,10 @@ export default (logsState = defaultLogsState, action) => {
 
         case UPLOAD_LOG + SUCCESS:
             newState = logsState
-                .set('list', logsState.list
-                        .set(payload.id, logsState.list.get(payload.id)
+                .set(
+                    'list', logsState.list
+                        .set(
+                            payload.id, logsState.list.get(payload.id)
                                 .set('isUploading', false)
                         )
                 );
@@ -100,25 +102,27 @@ export default (logsState = defaultLogsState, action) => {
 
 
         case UPLOAD_LOG + FAIL:
-            newState = logsState
-                .set('list', logsState.list
-                        .set(payload.id, logsState.list.get(payload.id)
-                                .set('shouldUpload', true)
-                        )
-                );
-            return newState;
-            // return logsState;
-
+            // debugger
+            // newState = logsState
+            //     .set(
+            //         'list', logsState.list
+            //             .set(
+            //                 payload.id, logsState.list.get(payload.id)
+            //                     .set('shouldUpload', true)
+            //             )
+            //     );
+            // return newState;
+            return logsState;
 
         case UPLOAD_LOG + SHOULD_UPLOAD:
-            newState = logsState
-                .set(
-                    'list', logsState.list
-                        .set(
-                            payload.id, logsState.list.get(payload.id)
-                                .set('shouldUpload', true)
-                        )
-                );
+            // newState = logsState
+            //     .set(
+            //         'list', logsState.list
+            //             .set(
+            //                 payload.id, logsState.list.get(payload.id)
+            //                     .set('shouldUpload', true)
+            //             )
+            //     );
             return newState;
 
         case UNDO + ADD:
