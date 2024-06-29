@@ -5,7 +5,7 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import {ADMIN, SCOREKEEPER} from "../constants";
 import Tournament from "../Components/Tournament";
-import Game from "../Components/Game";
+import Game from "../Components/Game/Game";
 import AuthRedirect from "../Components/AuthRedirect";
 
 

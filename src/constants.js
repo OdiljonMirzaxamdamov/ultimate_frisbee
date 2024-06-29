@@ -6,22 +6,26 @@ export const LOADING = '_LOADING';
 export const LOADED = '_LOADED';
 export const ADD = '_ADD';
 
+// ссылку на http://localhost:4000 сделаем т.к. у нас выдает ошибку при переводе данных с хоста 3000 на 4000
+// поэтому вручную указываем путь куда надо чтобы проект не останавливался на месте
+export const LOCALHOST = 'http://localhost:4000';
+
 export const API = {
-    bearer: '/bearer',
+    bearer: LOCALHOST + '/bearer',
     // users: 'http://142.93.129.161:8084/api/v1/users',
-    users: '/users',
+    users: LOCALHOST + '/users',
     //tournaments: 'http://142.93.129.161:8084/api/v1/tournaments',
-    tournaments: '/tournaments',
+    tournaments: LOCALHOST + '/tournaments',
     //all_teams: 'http://142.93.129.161:8084/api/v1/teams',
-    all_teams: '/teams',
+    all_teams: LOCALHOST + '/teams',
     //games: 'http://142.93.129.161:8084/api/v1/games/',
-    games: '/games',
+    games: LOCALHOST + '/games',
     //rosters: 'http://142.93.129.161:8084/api/v1/rosters',
-    rosters: '/rosters',
+    rosters: LOCALHOST + '/rosters',
     //players: 'http://142.93.129.161:8084/api/v1/players',
-    players: '/players',
+    players: LOCALHOST + '/players',
     //logs: 'http://142.93.129.161:8084/api/v1/logs/',
-    logs: '/logs',
+    logs: LOCALHOST + '/logs',
 };
 
 // commands
